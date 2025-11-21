@@ -1,0 +1,98 @@
+# Node modules
+node_modules/
+
+# Environment files
+.env
+.env.*.local
+.env.local
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+debug.log
+logs/
+*.log
+
+# Runtime data
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# Optional npm cache directory
+.npm
+
+# Build output
+dist/
+build/
+coverage/
+.nyc_output/
+coverage-final.json
+
+# Bundlers / cache
+.cache/
+.parcel-cache/
+.vite/
+.esbuild/
+.cache-loader
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDEs and editors
+.idea/
+.vscode/
+*.sublime-workspace
+*.sublime-project
+
+# Temporary files
+*.tmp
+*.temp
+tmp/
+temp/
+
+# Mac and Windows swap files
+*.swp
+*.swo
+
+# Generic sensitive files
+*.pem
+*.key
+*.crt
+
+# Package lock (uncomment if you do NOT want to commit lock files)
+# package-lock.json
+# yarn.lock
+# pnpm-lock.yaml
+
+# Docker
+.env.*.docker
+docker-compose.override.yml
+docker-compose.local.yml
+
+# Postgres / DB backups / local DB
+*.db
+*.sqlite
+*.sqlite3
+dump.sql
+pgdata/
+
+# Serverless / Framework artifacts
+.serverless/
+.cfn/
+
+# Misc
+*.tgz
+*.log.*
+coverage/
+.cache/
+
+# Optional: local node binary (nvm, nodenv)
+.node-version
+nvm-debug.log
+
+# Prevent committing the generated express project tarballs
+*.tar.gz
