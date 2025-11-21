@@ -1,26 +1,22 @@
-import jwt from "jsonwebtoken";
+import { verifyIdToken } from "../firebaseAdmin.js";
 
 export function loginHandler(req, res) {
-  const { username, passwd } = req.body;
-
-  const isValid = username === "admin" && passwd === "password";
-  if (!isValid) return res.status(401).end();
-
-  const token = jwt.sign({ sub: username }, "secret_key", { expiresIn: "24h" });
-
-  res.json({ token });
+  res.status(400).json({
+    error:
+      "This backend no longer issues local JWTs. Sign in on the client using Firebase Authentication SDK and include the ID token in the Authorization header (Bearer <idToken>) when calling protected endpoints.",
+  });
 }
 
-export function getInfoHandler(req, res) {
+export async function getInfoHandler(req, res) {
   const auth = req.headers["authorization"];
   if (!auth || !auth.startsWith("Bearer ")) return res.status(401).end();
 
-  const token = auth.replace("Bearer ", "");
+  const idToken = auth.replace("Bearer ", "").trim();
 
   try {
-    jwt.verify(token, "secret_key");
-    res.json("You are valid");
-  } catch {
-    res.status(401).end();
+    const decoded = await verifyIdToken(idToken);
+    res.json({ message: "Token valid", user: decoded });
+  } catch (err) {
+    res.status(401).json({ error: "Invalid or expired Firebase ID token" });
   }
 }
