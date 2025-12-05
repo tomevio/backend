@@ -1,51 +1,25 @@
 import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
-import admin from "firebase-admin";
+
+import { firebaseAuthMiddleware } from "./firebaseAdmin.js";
+
 import searchRoute from "./routes/search.js";
 import bookRoute from "./routes/book.js";
 import authorRoute from "./routes/author.js";
 
+import listsRoute from "./routes/lists.js";
+import reviewsRoute from "./routes/reviews.js";
+import progressRoute from "./routes/progress.js";
+
 dotenv.config();
-
-admin.initializeApp({
-  credential: admin.credential.cert({
-    projectId: "tomevio",
-    clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
-    privateKey: process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, "\n"),
-  }),
-});
-
-const firebaseAuth = async (req, res, next) => {
-  const authHeader = req.headers.authorization;
-
-  if (!authHeader || !authHeader.startsWith("Bearer ")) {
-    return res.status(401).json({
-      error:
-        "Unauthorized. Please provide a valid Firebase ID token in the Authorization header.",
-    });
-  }
-
-  const idToken = authHeader.split("Bearer ")[1];
-
-  try {
-    const decodedToken = await admin.auth().verifyIdToken(idToken);
-    req.user = decodedToken;
-    next();
-  } catch (error) {
-    console.error("Error verifying Firebase token:", error);
-    return res.status(401).json({
-      error: "Invalid or expired token. Please sign in again.",
-    });
-  }
-};
 
 const app = express();
 
 app.use(express.json());
 app.use(cors());
 
-app.get("/", (req, res) => res.send("Hello, World!"));
+app.get("/", (req, res) => res.send("Hello from Tomevio Backend!"));
 
 app.get("/search", searchRoute);
 app.get("/book/:id", bookRoute);
@@ -58,11 +32,21 @@ app.post("/login", (req, res) => {
   });
 });
 
-app.get("/profile", firebaseAuth, (req, res) => {
+app.get("/profile", firebaseAuthMiddleware, (req, res) => {
   res.json({ user: req.user });
+});
+
+app.use("/lists", firebaseAuthMiddleware, listsRoute);
+app.use("/reviews", firebaseAuthMiddleware, reviewsRoute);
+app.use("/progress", firebaseAuthMiddleware, progressRoute);
+
+app.use((err, req, res, next) => {
+  console.error("Unhandled error:", err);
+  res.status(500).json({ error: "Internal server error" });
 });
 
 const PORT = process.env.SERVER_ADDR?.split(":")[1] || 8080;
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
+  console.log(`Protected endpoints: /lists, /reviews, /progress`);
 });
