@@ -15,7 +15,7 @@ const firebaseConfig = {
   projectId: "tomevio",
   storageBucket: "tomevio.firebasestorage.app",
   messagingSenderId: "489863246130",
-  appId: "1:489863246130:web:7d905ddc2b6a57ad51672b",
+  appId: "1:489863246130:web:3a128cf4c8d82d2251672b",
 };
 
 const app = initializeApp(firebaseConfig);
