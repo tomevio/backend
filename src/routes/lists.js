@@ -105,7 +105,6 @@ router.post("/:listId/books", async (req, res) => {
 
     const ref = db.collection("lists").doc(listId);
 
-    // Use transaction to avoid races
     await db.runTransaction(async (tx) => {
       const snap = await tx.get(ref);
       if (!snap.exists) throw { code: 404, message: "List not found" };
@@ -115,10 +114,8 @@ router.post("/:listId/books", async (req, res) => {
 
       const books = Array.isArray(data.books) ? data.books.slice() : [];
 
-      // Prevent duplicate by bookId
       const exists = books.some((b) => b.bookId === bookId);
       if (exists) {
-        // nothing to do
         return;
       }
 
@@ -170,7 +167,6 @@ router.delete("/:listId/books/:bookId", async (req, res) => {
       const books = Array.isArray(data.books) ? data.books.slice() : [];
       const newBooks = books.filter((b) => b.bookId !== bookId);
 
-      // If nothing changed, just return
       if (newBooks.length === books.length) return;
 
       tx.update(ref, {

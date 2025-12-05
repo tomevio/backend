@@ -18,11 +18,11 @@ const firebaseConfig = {
   appId: "1:489863246130:web:3a128cf4c8d82d2251672b",
 };
 
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const googleProvider = new GoogleAuthProvider();
+const firebaseApp = initializeApp(firebaseConfig);
+const auth = getAuth(firebaseApp);
+const googleAuthProvider = new GoogleAuthProvider();
 
-export { auth, googleProvider };
+export { auth, googleAuthProvider };
 
 export const registerUser = async (email, password) => {
   try {
@@ -62,7 +62,7 @@ export const loginUser = async (email, password) => {
 
 export const loginWithGoogle = async () => {
   try {
-    const result = await signInWithPopup(auth, googleProvider);
+    const result = await signInWithPopup(auth, googleAuthProvider);
     const user = result.user;
 
     const idToken = await user.getIdToken();

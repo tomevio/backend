@@ -8,9 +8,9 @@ import searchRoute from "./routes/search.js";
 import bookRoute from "./routes/book.js";
 import authorRoute from "./routes/author.js";
 
-import listsRoute from "./routes/lists.js";
-import reviewsRoute from "./routes/reviews.js";
-import progressRoute from "./routes/progress.js";
+import listsRouter from "./routes/lists.js";
+import reviewsRouter from "./routes/reviews.js";
+import progressRouter from "./routes/progress.js";
 
 dotenv.config();
 
@@ -36,9 +36,9 @@ app.get("/profile", firebaseAuthMiddleware, (req, res) => {
   res.json({ user: req.user });
 });
 
-app.use("/lists", firebaseAuthMiddleware, listsRoute);
-app.use("/reviews", firebaseAuthMiddleware, reviewsRoute);
-app.use("/progress", firebaseAuthMiddleware, progressRoute);
+app.use("/lists", firebaseAuthMiddleware, listsRouter);
+app.use("/reviews", firebaseAuthMiddleware, reviewsRouter);
+app.use("/progress", firebaseAuthMiddleware, progressRouter);
 
 app.use((err, req, res, next) => {
   console.error("Unhandled error:", err);
