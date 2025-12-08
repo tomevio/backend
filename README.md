@@ -1,10 +1,10 @@
 <div align="center">
   <h1>Tomevio Backend</h1>
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="assets/tomevioDark.svg">
-    <source media="(prefers-color-scheme: light)" srcset="assets/tomevioLight.svg">
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/tomevio/.github/refs/heads/main/assets/logo-dark.svg">
+    <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/tomevio/.github/refs/heads/main/assets/logo-light.svg">
     <img alt="Tomevio Backend: The Express engine for your literary journey"
-         src="assets/tomevioLight.svg"
+         src="https://raw.githubusercontent.com/tomevio/.github/refs/heads/main/assets/logo-light.svg"
          width="50%">
   </picture>
   <p>High-performance backend for tracking, discovering, and organizing books</p>
