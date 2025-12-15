@@ -11,6 +11,7 @@ import authorRoute from "./routes/author.js";
 import listsRouter from "./routes/lists.js";
 import reviewsRouter from "./routes/reviews.js";
 import progressRouter from "./routes/progress.js";
+import uRouter from "./routes/users.js";
 
 dotenv.config();
 
@@ -39,6 +40,7 @@ app.get("/profile", firebaseAuthMiddleware, (req, res) => {
 app.use("/lists", firebaseAuthMiddleware, listsRouter);
 app.use("/reviews", firebaseAuthMiddleware, reviewsRouter);
 app.use("/progress", firebaseAuthMiddleware, progressRouter);
+app.use("/u", uRouter);
 
 app.use((err, req, res, next) => {
   console.error("Unhandled error:", err);
